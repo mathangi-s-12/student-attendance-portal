@@ -16,6 +16,17 @@ const Home: React.FC = () => {
   )
 }
 
+const NotFound: React.FC = () => {
+  return (
+    <div className="app">
+      <header className="app-header">
+        <p>Page not found</p>
+        <Link to="/">Go to Home page</Link>
+      </header>
+    </div>
+  )
+}
+
 ReactDOM.render(
   <React.StrictMode>
     <GlobalStyle />
@@ -23,6 +34,7 @@ ReactDOM.render(
       <Routes>
         <Route path="/" element={<Home>Engineering Test</Home>} />
         <Route path="staff/*" element={<StaffApp />} />
+        <Route path="*" element={<NotFound>Engineering Test</NotFound>} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,
