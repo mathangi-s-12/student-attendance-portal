@@ -5,9 +5,9 @@ import Select from "@material-ui/core/Select"
 import MenuItem from "@material-ui/core/MenuItem"
 import { Spacing } from "shared/styles/styles"
 
-type SortOrders = "asc" | "desc" | null
+export type SortOrders = "asc" | "desc" | null
 
-type SortOptions = {
+export type SortOptions = {
   value: string | number
   label: string
 }
@@ -29,7 +29,7 @@ export const SORT_STATES: SortOrderObject = {
   desc: "desc",
 }
 
-export const Sort: React.FC<Props> = ({ sortBy, sortOrder, onSetSortBy, onSetSortOrder, sortParams }) => {
+const Sort: React.FC<Props> = ({ sortBy, sortOrder, onSetSortBy, onSetSortOrder, sortParams }) => {
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     onSetSortBy(event.target.value as string)
   }
@@ -44,13 +44,19 @@ export const Sort: React.FC<Props> = ({ sortBy, sortOrder, onSetSortBy, onSetSor
         </Select>
       </div>
       <div>
-        {sortOrder === SORT_STATES.asc ? (
-          <span onClick={() => onSetSortOrder(SORT_STATES.desc)}>
-            <FontAwesomeIcon icon="fa-solid fa-arrow-up-z-a" />
+        {sortOrder === null && (
+          <span onClick={() => onSetSortOrder(SORT_STATES.asc)} color="#ffffff">
+            <FontAwesomeIcon icon="sort-up-down" />
           </span>
-        ) : (
-          <span onClick={() => onSetSortOrder(SORT_STATES.asc)}>
-            <FontAwesomeIcon icon="fa-solid fa-arrow-up-a-z" />
+        )}
+        {sortOrder === SORT_STATES.asc && (
+          <span onClick={() => onSetSortOrder(SORT_STATES.desc)} color="#ffffff">
+            <FontAwesomeIcon icon="arrow-up-a-z" />
+          </span>
+        )}
+        {sortOrder === SORT_STATES.desc && (
+          <span onClick={() => onSetSortOrder(null)} color="#ffffff">
+            <FontAwesomeIcon icon="arrow-up-z-a" />
           </span>
         )}
       </div>
@@ -64,3 +70,5 @@ const S = {
     align-items: center;
   `,
 }
+
+export default Sort
