@@ -1,9 +1,9 @@
 import React from "react"
 import styled from "styled-components"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faArrowsAlt, faSortAlphaDown, faSortAlphaDownAlt } from "@fortawesome/free-solid-svg-icons"
 import Select from "@material-ui/core/Select"
 import MenuItem from "@material-ui/core/MenuItem"
-import { Spacing } from "shared/styles/styles"
 
 export type SortOrders = "asc" | "desc" | null
 
@@ -39,24 +39,26 @@ const Sort: React.FC<Props> = ({ sortBy, sortOrder, onSetSortBy, onSetSortOrder,
       <div className="mr-5">
         <Select value={sortBy} onChange={handleChange}>
           {sortParams.map(({ value, label }) => (
-            <MenuItem value={value}>{label}</MenuItem>
+            <MenuItem key={value} value={value}>
+              {label}
+            </MenuItem>
           ))}
         </Select>
       </div>
       <div>
         {sortOrder === null && (
-          <span onClick={() => onSetSortOrder(SORT_STATES.asc)} color="#ffffff">
-            <FontAwesomeIcon icon="sort-up-down" />
+          <span onClick={() => onSetSortOrder(SORT_STATES.asc)}>
+            <FontAwesomeIcon icon={faArrowsAlt} color="#ffffff" />
           </span>
         )}
         {sortOrder === SORT_STATES.asc && (
-          <span onClick={() => onSetSortOrder(SORT_STATES.desc)} color="#ffffff">
-            <FontAwesomeIcon icon="arrow-up-a-z" />
+          <span onClick={() => onSetSortOrder(SORT_STATES.desc)}>
+            <FontAwesomeIcon icon={faSortAlphaDown} color="#ffffff" />
           </span>
         )}
         {sortOrder === SORT_STATES.desc && (
-          <span onClick={() => onSetSortOrder(null)} color="#ffffff">
-            <FontAwesomeIcon icon="arrow-up-z-a" />
+          <span onClick={() => onSetSortOrder(null)}>
+            <FontAwesomeIcon icon={faSortAlphaDownAlt} color="#ffffff" />
           </span>
         )}
       </div>
