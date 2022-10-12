@@ -36,6 +36,7 @@ export const ActiveRollOverlay: React.FC<Props> = (props) => {
               { type: "present", count: getCount("present") },
               { type: "late", count: getCount("late") },
               { type: "absent", count: getCount("absent") },
+              { type: "unmark", count: getCount("unmark") },
             ]}
             onItemClick={rollFilter.handleSelectedRoleChange}
           />
