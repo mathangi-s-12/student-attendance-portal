@@ -24,11 +24,15 @@ const CustomInputBase = withStyles(() =>
 )(InputBase)
 
 const Search: React.FC<Props> = ({ searchTerm, onSearchTermChange, disable }) => {
+  const [searchTermLocal, setSearchTermLocal] = useState<string>(searchTerm)
+
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setSearchTermLocal(event.target.value as string)
     onSearchTermChange(event.target.value as string)
   }
 
   const clearSearch = () => {
+    setSearchTermLocal("")
     onSearchTermChange("")
   }
 
@@ -38,9 +42,9 @@ const Search: React.FC<Props> = ({ searchTerm, onSearchTermChange, disable }) =>
         <FontAwesomeIcon icon={faSearch} color="#ffffff" />
       </span>
       <S.Input className="mr-20 ml-20">
-        <CustomInputBase value={searchTerm} onChange={handleChange} placeholder="Search..." disabled={disable} />
+        <CustomInputBase value={searchTermLocal} onChange={handleChange} placeholder="Search..." disabled={disable} />
       </S.Input>
-      {searchTerm.trim() && (
+      {searchTermLocal.trim() && (
         <S.Clear onClick={clearSearch} className="pr-10 pl-10 cptr">
           <FontAwesomeIcon icon={faTimes} color="#ffffff" />
         </S.Clear>
