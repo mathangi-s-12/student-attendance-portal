@@ -16,6 +16,11 @@ export interface RoleStateContextModel {
   onExit?: () => void
 }
 
+export interface RoleFilterContextModel {
+  selectedRole: RolllStateType | "all"
+  handleSelectedRoleChange?: (roleState: RolllStateType) => void
+}
+
 export type StudentRoll = { student_id: number; roll_state: RolllStateType }
 
 export type RolllStateType = "unmark" | "present" | "absent" | "late"
