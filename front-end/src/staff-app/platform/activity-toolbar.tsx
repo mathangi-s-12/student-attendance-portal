@@ -2,10 +2,10 @@
 import React, { useContext } from "react"
 import styled from "styled-components"
 // Styles
-import { Spacing, BorderRadius, FontWeight } from "shared/styles/styles"
+import { BorderRadius, FontWeight } from "shared/styles/styles"
 import { Colors } from "shared/styles/colors"
 // Components
-import Sort, { SORT_STATES, SortOrders } from "shared/components/sort/sort.component"
+import Sort from "shared/components/sort/sort.component"
 import Search from "shared/components/search-bar/search-bar.component"
 // Context
 import ActivitiesContext from "staff-app/contexts/activity-page-context"
