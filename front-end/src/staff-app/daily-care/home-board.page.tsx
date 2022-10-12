@@ -11,6 +11,7 @@ import { SORT_STATES, SortOrders } from "shared/components/sort/sort.component"
 import { ActiveRollOverlay, ActiveRollAction } from "staff-app/components/active-roll-overlay/active-roll-overlay.component"
 import { StudentListTile } from "staff-app/components/student-list-tile/student-list-tile.component"
 import Toolbar, { ToolbarAction } from "./home-board-toolbar"
+import toast from "shared/components/toast/toast"
 // Custom Hooks
 import { useApi } from "shared/hooks/use-api"
 // Types and interfaces
@@ -49,6 +50,11 @@ export const HomeBoardPage: React.FC = () => {
   useEffect(() => {
     initRollStates()
   }, [data])
+
+  useEffect(() => {
+    if (saveLoadState === "loaded") toast("success", "Roll saved successfully")
+    if (saveLoadState === "error") toast("error", "Error in saving roll")
+  }, [saveLoadState])
 
   const onToolbarAction = (action: ToolbarAction) => {
     if (action === "roll") {
