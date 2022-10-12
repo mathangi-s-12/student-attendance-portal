@@ -17,8 +17,9 @@ import { StudentListTile } from "staff-app/components/student-list-tile/student-
 import { useApi } from "shared/hooks/use-api"
 // Types and interfaces
 import { Person, PersonHelper } from "shared/models/person"
+import { StudentRoll, RolllStateType } from "shared/models/roll"
 // Context
-import DailyCareContext, { DailyCareContextProvider } from "staff-app/contexts/daily-care-context"
+import DailyCareContext, { DailyCareContextProvider, DailyCareContextType } from "staff-app/contexts/daily-care-context"
 
 type StudentSortParams = "first_name" | "last_name"
 
@@ -36,11 +37,22 @@ export const HomeBoardPage: React.FC = () => {
   const [sortBy, setSortBy] = useState<StudentSortParams>(STUDENT_SORT_PARAMS.firstName.value)
   const [sortOrder, setSortOrder] = useState<SortOrders>(null)
   const [searchTerm, setSearchTerm] = useState<string>("")
+  const [studentRollStates, setStudentRollStates] = useState<StudentRoll[]>([])
   const [getStudents, data, loadState] = useApi<{ students: Person[] }>({ url: "get-homeboard-students" })
 
   useEffect(() => {
     void getStudents()
   }, [getStudents])
+
+  useEffect(() => {
+    const studentRollStatesFromData = data?.students
+      ? data?.students.map((student: Person) => ({
+          student_id: student.id,
+          roll_state: "unmark" as RolllStateType,
+        }))
+      : []
+    setStudentRollStates(studentRollStatesFromData)
+  }, [data])
 
   const onToolbarAction = (action: ToolbarAction) => {
     if (action === "roll") {
@@ -66,7 +78,17 @@ export const HomeBoardPage: React.FC = () => {
     setSearchTerm(searchTerm)
   }, 300)
 
-  const dailyCareContextValue = {
+  const handleStudentRollStateChange = (studentId: number, rollState: RolllStateType) => {
+    const studentChangedIndex = studentRollStates.findIndex((studentRoll: StudentRoll) => studentRoll.student_id === studentId)
+    const studentRollCopy = [...studentRollStates]
+    if (studentChangedIndex > -1) {
+      studentRollCopy[studentChangedIndex].roll_state = rollState
+    }
+    setStudentRollStates(studentRollCopy)
+  }
+
+  const dailyCareContextValue: DailyCareContextType = {
+    data: data?.students || [],
     sort: {
       sortOptions: Object.values(STUDENT_SORT_PARAMS),
       sortOrder,
@@ -77,6 +99,10 @@ export const HomeBoardPage: React.FC = () => {
     search: {
       searchTerm,
       handleSearchTermChange,
+    },
+    rollStates: {
+      studentRollStates,
+      handleStudentRollStateChange,
     },
   }
 

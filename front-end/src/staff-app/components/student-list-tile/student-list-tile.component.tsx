@@ -1,16 +1,32 @@
-import React from "react"
+// Libs
+import React, { useContext } from "react"
 import styled from "styled-components"
+// Styles
 import { Spacing, BorderRadius, FontWeight } from "shared/styles/styles"
-import { Images } from "assets/images"
 import { Colors } from "shared/styles/colors"
+// Assets
+import { Images } from "assets/images"
+// Types and interfaces
 import { Person, PersonHelper } from "shared/models/person"
+import { StudentRoll, RolllStateType } from "shared/models/roll"
+// Components
 import { RollStateSwitcher } from "staff-app/components/roll-state/roll-state-switcher.component"
-
+// Contexts
+import DailyCareContext from "staff-app/contexts/daily-care-context"
 interface Props {
   isRollMode?: boolean
   student: Person
 }
+
 export const StudentListTile: React.FC<Props> = ({ isRollMode, student }) => {
+  const { rollStates } = useContext(DailyCareContext)
+
+  const initialState: RolllStateType = rollStates.studentRollStates.find((studentRoll: StudentRoll) => student.id === studentRoll.student_id)?.roll_state
+
+  const onRollStateChange = (state: RolllStateType) => {
+    rollStates.handleStudentRollStateChange(student.id, state)
+  }
+
   return (
     <S.Container>
       <S.Avatar url={Images.avatar}></S.Avatar>
@@ -19,7 +35,7 @@ export const StudentListTile: React.FC<Props> = ({ isRollMode, student }) => {
       </S.Content>
       {isRollMode && (
         <S.Roll>
-          <RollStateSwitcher />
+          <RollStateSwitcher initialState={initialState} onStateChange={onRollStateChange} />
         </S.Roll>
       )}
     </S.Container>
