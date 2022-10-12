@@ -42,19 +42,14 @@ export const HomeBoardPage: React.FC = () => {
   const [selectedRole, setSelectedRole] = useState<RolllStateType | "all">("all")
 
   const [getStudents, data, loadState] = useApi<{ students: Person[] }>({ url: "get-homeboard-students" })
+  const [saveStudents, savedData, saveLoadState, saveError] = useApi<{}>({ url: "save-roll" })
 
   useEffect(() => {
     void getStudents()
   }, [getStudents])
 
   useEffect(() => {
-    const studentRollStatesFromData = data?.students
-      ? data?.students.map((student: Person) => ({
-          student_id: student.id,
-          roll_state: "unmark" as RolllStateType,
-        }))
-      : []
-    setStudentRollStates(studentRollStatesFromData)
+    initRollStates()
   }, [data])
 
   const onToolbarAction = (action: ToolbarAction) => {
@@ -63,9 +58,31 @@ export const HomeBoardPage: React.FC = () => {
     }
   }
 
+  const initRollStates = () => {
+    const studentRollStatesFromData: StudentRoll[] = data?.students
+      ? data?.students.map((student: Person) => ({
+          student_id: student.id,
+          roll_state: "unmark" as RolllStateType,
+        }))
+      : []
+    setStudentRollStates(studentRollStatesFromData)
+  }
+
+  const handleCompleteRoll = (roles: StudentRoll[]) => {
+    saveStudents({
+      student_roll_states: [...roles],
+    })
+  }
+
   const onActiveRollAction = (action: ActiveRollAction) => {
     if (action === "exit") {
       setIsRollMode(false)
+      initRollStates()
+    }
+    if (action === "complete") {
+      setIsRollMode(false)
+      handleCompleteRoll([...studentRollStates])
+      initRollStates()
     }
   }
 

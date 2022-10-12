@@ -11,7 +11,7 @@ import DailyCareContext from "staff-app/contexts/daily-care-context"
 // Types and interfaces
 import { StudentRoll, RolllStateType } from "shared/models/roll"
 
-export type ActiveRollAction = "filter" | "exit"
+export type ActiveRollAction = "complete" | "exit"
 interface Props {
   isActive: boolean
   onItemClick: (action: ActiveRollAction, value?: string) => void
@@ -44,7 +44,7 @@ export const ActiveRollOverlay: React.FC<Props> = (props) => {
             <Button color="inherit" onClick={() => onItemClick("exit")}>
               Exit
             </Button>
-            <Button color="inherit" style={{ marginLeft: Spacing.u2 }} onClick={() => onItemClick("exit")}>
+            <Button color="inherit" style={{ marginLeft: Spacing.u2 }} onClick={() => onItemClick("complete")}>
               Complete
             </Button>
           </div>
