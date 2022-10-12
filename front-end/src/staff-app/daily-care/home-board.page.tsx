@@ -1,25 +1,23 @@
 // Libs
-import React, { useState, useEffect, useContext } from "react"
+import React, { useState, useEffect } from "react"
 import styled from "styled-components"
-import Button from "@material-ui/core/ButtonBase"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { debounce } from "debounce"
 // Styles
-import { Spacing, BorderRadius, FontWeight } from "shared/styles/styles"
-import { Colors } from "shared/styles/colors"
+import { Spacing } from "shared/styles/styles"
 // Components
 import { CenteredContainer } from "shared/components/centered-container/centered-container.component"
-import Sort, { SORT_STATES, SortOrders } from "shared/components/sort/sort.component"
-import Search from "shared/components/search-bar/search-bar.component"
+import { SORT_STATES, SortOrders } from "shared/components/sort/sort.component"
 import { ActiveRollOverlay, ActiveRollAction } from "staff-app/components/active-roll-overlay/active-roll-overlay.component"
 import { StudentListTile } from "staff-app/components/student-list-tile/student-list-tile.component"
+import Toolbar, { ToolbarAction } from "./home-board-toolbar"
 // Custom Hooks
 import { useApi } from "shared/hooks/use-api"
 // Types and interfaces
 import { Person, PersonHelper } from "shared/models/person"
 import { StudentRoll, RolllStateType } from "shared/models/roll"
 // Context
-import DailyCareContext, { DailyCareContextProvider, DailyCareContextType } from "staff-app/contexts/daily-care-context"
+import { DailyCareContextProvider, DailyCareContextType } from "staff-app/contexts/daily-care-context"
 
 type StudentSortParams = "first_name" | "last_name"
 
@@ -206,57 +204,11 @@ export const HomeBoardPage: React.FC = () => {
   )
 }
 
-type ToolbarAction = "roll" | "sort"
-interface ToolbarProps {
-  onItemClick: (action: ToolbarAction, value?: string) => void
-}
-
-const Toolbar: React.FC<ToolbarProps> = (props) => {
-  const { onItemClick } = props
-  const { sort, search } = useContext(DailyCareContext)
-
-  return (
-    <S.ToolbarContainer>
-      <div onClick={() => onItemClick("sort")}>
-        <Sort
-          sortParams={sort?.sortOptions}
-          sortBy={sort?.sortBy}
-          sortOrder={sort?.sortOrder}
-          onSetSortBy={sort?.handleSortByChange}
-          onSetSortOrder={sort?.handleSortOrderChange}
-        />
-      </div>
-      <div className="flex-grow mr-30 ml-30">
-        <Search searchTerm={search.searchTerm} onSearchTermChange={search.handleSearchTermChange} />
-      </div>
-      <S.Button onClick={() => onItemClick("roll")}>Start Roll</S.Button>
-    </S.ToolbarContainer>
-  )
-}
-
 const S = {
   PageContainer: styled.div`
     display: flex;
     flex-direction: column;
     width: 50%;
     margin: ${Spacing.u4} auto 140px;
-  `,
-  ToolbarContainer: styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: #fff;
-    background-color: ${Colors.blue.base};
-    padding: 10px 14px;
-    font-weight: ${FontWeight.strong};
-    border-radius: ${BorderRadius.default};
-  `,
-  Button: styled(Button)`
-    && {
-      border: 1px solid #ffffff;
-      border-radius: 3px;
-      padding: 6px;
-      font-weight: ${FontWeight.strong};
-    }
   `,
 }
