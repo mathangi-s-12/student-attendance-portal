@@ -54,7 +54,7 @@ const Sort: React.FC<Props> = ({ sortBy, sortOrder, onSetSortBy, onSetSortOrder,
 
   return (
     <S.Container className="p-5">
-      <S.Select className="mr-10">
+      <S.Select className="mr-10 pl-5">
         <CustomSelect value={sortBy} onChange={handleChange}>
           {sortParams.map(({ value, label }) => (
             <MenuItem key={value} value={value}>
