@@ -12,8 +12,6 @@ export interface RollInput {
 export interface RoleStateContextModel {
   studentRollStates: StudentRoll[]
   handleStudentRollStateChange?: (studentId: number, rollState: RolllStateType) => void
-  onComplete?: (rolls: StudentRoll[]) => void
-  onExit?: () => void
 }
 
 export interface RoleFilterContextModel {
