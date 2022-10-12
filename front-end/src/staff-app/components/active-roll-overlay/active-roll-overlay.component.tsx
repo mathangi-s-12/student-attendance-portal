@@ -19,7 +19,7 @@ interface Props {
 
 export const ActiveRollOverlay: React.FC<Props> = (props) => {
   const { isActive, onItemClick } = props
-  const { data, rollStates } = useContext(DailyCareContext)
+  const { data, rollStates, rollFilter } = useContext(DailyCareContext)
 
   const getCount = (roleState: RolllStateType) => {
     return rollStates.studentRollStates.filter((state: StudentRoll) => state.roll_state === roleState).length
@@ -37,6 +37,7 @@ export const ActiveRollOverlay: React.FC<Props> = (props) => {
               { type: "late", count: getCount("late") },
               { type: "absent", count: getCount("absent") },
             ]}
+            onItemClick={rollFilter.handleSelectedRoleChange}
           />
           <div style={{ marginTop: Spacing.u6 }}>
             <Button color="inherit" onClick={() => onItemClick("exit")}>
