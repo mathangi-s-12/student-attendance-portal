@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faArrowsAlt, faSortAlphaDown, faSortAlphaDownAlt } from "@fortawesome/free-solid-svg-icons"
+import { faArrowsAltV, faSortAlphaDown, faSortAlphaDownAlt } from "@fortawesome/free-solid-svg-icons"
 import Select from "@material-ui/core/Select"
 import MenuItem from "@material-ui/core/MenuItem"
 import { createStyles, withStyles } from "@material-ui/core/styles"
@@ -53,7 +53,7 @@ const Sort: React.FC<Props> = ({ sortBy, sortOrder, onSetSortBy, onSetSortOrder,
   }
 
   return (
-    <S.Container>
+    <S.Container className="p-5">
       <S.Select className="mr-10">
         <CustomSelect value={sortBy} onChange={handleChange}>
           {sortParams.map(({ value, label }) => (
@@ -63,10 +63,10 @@ const Sort: React.FC<Props> = ({ sortBy, sortOrder, onSetSortBy, onSetSortOrder,
           ))}
         </CustomSelect>
       </S.Select>
-      <div>
+      <S.SortState className="cptr pr-5 flex actr jctr">
         {sortOrder === null && (
           <span onClick={() => onSetSortOrder(SORT_STATES.asc)}>
-            <FontAwesomeIcon icon={faArrowsAlt} color="#ffffff" />
+            <FontAwesomeIcon icon={faArrowsAltV} color="#ffffff" />
           </span>
         )}
         {sortOrder === SORT_STATES.asc && (
@@ -79,13 +79,15 @@ const Sort: React.FC<Props> = ({ sortBy, sortOrder, onSetSortBy, onSetSortOrder,
             <FontAwesomeIcon icon={faSortAlphaDownAlt} color="#ffffff" />
           </span>
         )}
-      </div>
+      </S.SortState>
     </S.Container>
   )
 }
 
 const S = {
   Container: styled.div`
+    border: 1px solid #ffffff;
+    border-radius: 3px;
     display: flex;
     align-items: center;
     .MuiInput-underline::before {
@@ -98,6 +100,9 @@ const S = {
   Select: styled.div`
     border-right: 1px solid #ffffff;
     min-width: 100px; // might need to be adjusted for greater string lengths
+  `,
+  SortState: styled.div`
+    min-width: 13px;
   `,
 }
 
