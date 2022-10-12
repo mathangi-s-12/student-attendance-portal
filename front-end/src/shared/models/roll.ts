@@ -2,7 +2,7 @@ export interface Roll {
   id: number
   name: string
   completed_at: Date
-  student_roll_states: { student_id: number; roll_state: RolllStateType }[]
+  student_roll_states: StudentRoll[]
 }
 
 export interface RollInput {
@@ -19,6 +19,6 @@ export interface RoleFilterContextModel {
   handleSelectedRoleChange?: (roleState: RolllStateType) => void
 }
 
-export type StudentRoll = { student_id: number; roll_state: RolllStateType }
+export type StudentRoll = { student_id: number; student_name: string; roll_state: RolllStateType }
 
 export type RolllStateType = "unmark" | "present" | "absent" | "late"

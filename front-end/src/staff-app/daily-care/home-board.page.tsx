@@ -62,6 +62,7 @@ export const HomeBoardPage: React.FC = () => {
     const studentRollStatesFromData: StudentRoll[] = data?.students
       ? data?.students.map((student: Person) => ({
           student_id: student.id,
+          student_name: PersonHelper.getFullName(student),
           roll_state: "unmark" as RolllStateType,
         }))
       : []
