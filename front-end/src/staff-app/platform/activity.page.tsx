@@ -109,13 +109,15 @@ export const ActivityPage: React.FC = () => {
     })
   }
 
-  const getSortedAndFilteredData = (activities: Activity[]) => {
-    if (!data?.activity) return []
+  const getSortedAndFilteredData = (activities?: Activity[]) => {
+    if (!activities) return []
     const filteredSearchData = [...getSearchedData(activities)]
     const sortedData = [...getSortedData(filteredSearchData)]
 
     return [...sortedData]
   }
+
+  const sortedAndFilteredActivities = getSortedAndFilteredData(data?.activity)
 
   return (
     <>
@@ -131,9 +133,11 @@ export const ActivityPage: React.FC = () => {
 
           {loadState === "loaded" && data?.activity && (
             <>
-              {getSortedAndFilteredData(data.activity).map((s) => (
-                <ActivityListTile key={s.entity.id} activity={s} />
-              ))}
+              {sortedAndFilteredActivities?.length ? (
+                sortedAndFilteredActivities.map((s) => <ActivityListTile key={s.entity.id} activity={s} />)
+              ) : (
+                <S.NoData className="flex actr jctr">Clear/change filters</S.NoData>
+              )}
             </>
           )}
 
@@ -164,5 +168,13 @@ const S = {
     padding: 10px 14px;
     font-weight: ${FontWeight.strong};
     border-radius: ${BorderRadius.default};
+  `,
+  NoData: styled.div`
+    border-radius: ${BorderRadius.default};
+    background-color: #fff;
+    font-size: 16px;
+    font-weight: ${FontWeight.strong};
+    margin-top: 20px;
+    min-height: 50vh;
   `,
 }

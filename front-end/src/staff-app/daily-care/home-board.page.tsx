@@ -4,7 +4,7 @@ import styled from "styled-components"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { debounce } from "debounce"
 // Styles
-import { Spacing } from "shared/styles/styles"
+import { Spacing, FontWeight, BorderRadius } from "shared/styles/styles"
 // Components
 import { CenteredContainer } from "shared/components/centered-container/centered-container.component"
 import { SORT_STATES, SortOrders } from "shared/components/sort/sort.component"
@@ -163,14 +163,16 @@ export const HomeBoardPage: React.FC = () => {
     return [...students].filter((student: Person) => studentIdsWithSelectedRole.includes(student.id))
   }
 
-  const getSortedAndFilteredData = (students: Person[]) => {
-    if (!data) return []
+  const getSortedAndFilteredData = (students?: Person[]) => {
+    if (!students) return []
     const filteredRoleData = [...getRoleFilteredData(students)]
     const filteredSearchData = [...getSearchedData(filteredRoleData)]
     const sortedData = [...getSortedData(filteredSearchData)]
 
     return [...sortedData]
   }
+
+  const sortedAndFilteredStudents = getSortedAndFilteredData(data?.students)
 
   return (
     <>
@@ -186,9 +188,11 @@ export const HomeBoardPage: React.FC = () => {
 
           {loadState === "loaded" && data?.students && (
             <>
-              {getSortedAndFilteredData(data.students).map((s) => (
-                <StudentListTile key={s.id} isRollMode={isRollMode} student={s} />
-              ))}
+              {sortedAndFilteredStudents?.length ? (
+                sortedAndFilteredStudents.map((s) => <StudentListTile key={s.id} isRollMode={isRollMode} student={s} />)
+              ) : (
+                <S.NoData className="flex actr jctr">Clear/change filters</S.NoData>
+              )}
             </>
           )}
 
@@ -210,5 +214,13 @@ const S = {
     flex-direction: column;
     width: 50%;
     margin: ${Spacing.u4} auto 140px;
+  `,
+  NoData: styled.div`
+    border-radius: ${BorderRadius.default};
+    background-color: #fff;
+    font-size: 16px;
+    font-weight: ${FontWeight.strong};
+    margin-top: 20px;
+    min-height: 50vh;
   `,
 }
