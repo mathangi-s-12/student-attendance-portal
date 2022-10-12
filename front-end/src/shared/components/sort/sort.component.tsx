@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faArrowsAlt, faSortAlphaDown, faSortAlphaDownAlt } from "@fortawesome/free-solid-svg-icons"
 import Select from "@material-ui/core/Select"
 import MenuItem from "@material-ui/core/MenuItem"
+import { createStyles, withStyles } from "@material-ui/core/styles"
 
 export type SortOrders = "asc" | "desc" | null
 
@@ -29,6 +30,23 @@ export const SORT_STATES: SortOrderObject = {
   desc: "desc",
 }
 
+const CustomSelect = withStyles(() =>
+  createStyles({
+    root: {
+      color: "#ffffff",
+      fontFamily: `-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif`,
+      fontSize: "14px",
+      fontWeight: 600,
+    },
+    select: {
+      padding: "0 24px 0 0",
+    },
+    icon: {
+      color: "#ffffff",
+    },
+  })
+)(Select)
+
 const Sort: React.FC<Props> = ({ sortBy, sortOrder, onSetSortBy, onSetSortOrder, sortParams }) => {
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     onSetSortBy(event.target.value as string)
@@ -36,15 +54,15 @@ const Sort: React.FC<Props> = ({ sortBy, sortOrder, onSetSortBy, onSetSortOrder,
 
   return (
     <S.Container>
-      <div className="mr-5">
-        <Select value={sortBy} onChange={handleChange}>
+      <S.Select className="mr-10">
+        <CustomSelect value={sortBy} onChange={handleChange}>
           {sortParams.map(({ value, label }) => (
             <MenuItem key={value} value={value}>
               {label}
             </MenuItem>
           ))}
-        </Select>
-      </div>
+        </CustomSelect>
+      </S.Select>
       <div>
         {sortOrder === null && (
           <span onClick={() => onSetSortOrder(SORT_STATES.asc)}>
@@ -70,6 +88,16 @@ const S = {
   Container: styled.div`
     display: flex;
     align-items: center;
+    .MuiInput-underline::before {
+      border-bottom: 0 !important;
+    }
+    .MuiInput-underline::after {
+      border-bottom: 0 !important;
+    }
+  `,
+  Select: styled.div`
+    border-right: 1px solid #ffffff;
+    min-width: 100px; // might need to be adjusted for greater string lengths
   `,
 }
 
