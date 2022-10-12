@@ -29,7 +29,7 @@ export const ActiveRollOverlay: React.FC<Props> = (props) => {
     <S.Overlay isActive={isActive}>
       <S.Content>
         <div>Class Attendance</div>
-        <div>
+        <S.Rolls>
           <RollStateList
             stateList={[
               { type: "all", count: data?.length || 0 },
@@ -48,7 +48,7 @@ export const ActiveRollOverlay: React.FC<Props> = (props) => {
               Complete
             </Button>
           </div>
-        </div>
+        </S.Rolls>
       </S.Content>
     </S.Overlay>
   )
@@ -74,5 +74,8 @@ const S = {
     border: 1px solid #f5f5f536;
     border-radius: ${BorderRadius.default};
     padding: ${Spacing.u4};
+  `,
+  Rolls: styled.div`
+    min-width: 30%;
   `,
 }
