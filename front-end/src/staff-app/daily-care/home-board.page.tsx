@@ -191,7 +191,7 @@ export const HomeBoardPage: React.FC = () => {
               {sortedAndFilteredStudents?.length ? (
                 sortedAndFilteredStudents.map((s) => <StudentListTile key={s.id} isRollMode={isRollMode} student={s} />)
               ) : (
-                <S.NoData className="flex actr jctr">Clear/change filters</S.NoData>
+                <S.NoData className="flex actr jctr">{data.students.length ? "Clear/change filters" : "NA"}</S.NoData>
               )}
             </>
           )}

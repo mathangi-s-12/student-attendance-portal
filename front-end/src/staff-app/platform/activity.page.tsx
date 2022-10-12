@@ -136,7 +136,7 @@ export const ActivityPage: React.FC = () => {
               {sortedAndFilteredActivities?.length ? (
                 sortedAndFilteredActivities.map((s) => <ActivityListTile key={s.entity.id} activity={s} />)
               ) : (
-                <S.NoData className="flex actr jctr">Clear/change filters</S.NoData>
+                <S.NoData className="flex actr jctr">{data.activity.length ? "Clear/change filters" : "NA"}</S.NoData>
               )}
             </>
           )}
