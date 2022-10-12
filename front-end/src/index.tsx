@@ -1,6 +1,8 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom"
+import { ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 import "index.css"
 import StaffApp from "staff-app/app"
 import { GlobalStyle } from "shared/styles/global-style"
@@ -37,6 +39,7 @@ ReactDOM.render(
         <Route path="*" element={<NotFound>Engineering Test</NotFound>} />
       </Routes>
     </BrowserRouter>
+    <ToastContainer />
   </React.StrictMode>,
   document.getElementById("root")
 )
