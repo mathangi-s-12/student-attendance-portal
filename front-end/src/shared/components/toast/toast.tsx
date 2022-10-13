@@ -1,6 +1,6 @@
 import { toast as Toast, Slide, ToastOptions } from "react-toastify"
 
-type ToastTypes = "success" | "error" | "warning"
+type ToastTypes = "success" | "error" | "warning" | "info"
 
 const getToastConfig = (type: ToastTypes = "success"): ToastOptions => {
   const toastStyleMap = {
@@ -29,6 +29,16 @@ const getToastConfig = (type: ToastTypes = "success"): ToastOptions => {
       position: Toast.POSITION.TOP_RIGHT,
       autoClose: 5000,
       toastId: "warning-toast",
+      hideProgressBar: false,
+      pauseOnHover: true,
+      closeOnClick: true,
+      transition: Slide,
+    },
+    info: {
+      type: Toast.TYPE.INFO,
+      position: Toast.POSITION.TOP_RIGHT,
+      autoClose: 5000,
+      toastId: "info-toast",
       hideProgressBar: false,
       pauseOnHover: true,
       closeOnClick: true,
