@@ -2,6 +2,7 @@
   "name": "front-end",
   "version": "0.2.0",
   "private": true,
+  "homepage": "https://mathangi-s-12.github.io/student-attendance-portal",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.30",
     "@fortawesome/free-solid-svg-icons": "^5.14.0",
@@ -16,7 +17,7 @@
   },
   "scripts": {
     "start": "vite",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "serve": "vite preview --port 8000"
   },
   "browserslist": {

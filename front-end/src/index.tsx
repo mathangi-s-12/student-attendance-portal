@@ -1,6 +1,6 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom"
+import { HashRouter as Router, Routes, Route, Link } from "react-router-dom"
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import "index.css"
@@ -32,13 +32,14 @@ const NotFound: React.FC = () => {
 ReactDOM.render(
   <React.StrictMode>
     <GlobalStyle />
-    <BrowserRouter>
+    <Router basename="/student-attendance-portal">
+      {/* <Router> */}
       <Routes>
         <Route path="/" element={<Home>Engineering Test</Home>} />
         <Route path="staff/*" element={<StaffApp />} />
         <Route path="*" element={<NotFound>Engineering Test</NotFound>} />
       </Routes>
-    </BrowserRouter>
+    </Router>
     <ToastContainer />
   </React.StrictMode>,
   document.getElementById("root")
